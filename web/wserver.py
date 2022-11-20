@@ -776,7 +776,6 @@ def set_priority(id_):
             LOGGER.info(f"Verification Failed! Report! Gid: {id_}")
     return list_torrent_contents(id_)
 
-@app.route('/')
 botStartTime = time()
 if ospath.exists('.git'):
     commit_date = check_output(["git log -1 --date=format:'%y/%m/%d %H:%M' --pretty=format:'%cd'"], shell=True).decode()
@@ -800,13 +799,14 @@ def status():
             'recv': recv,
         },
     }
-
+@app.route('/')
 def homepage():
-    return "<h1>See mirror-with-weeb <a href='https://github.com/weebzone/WZML'>@GitHub</a> By <a href='https://github.com/weebzone'>Code With Weeb</a></h1>"
+    return rawindexpage.replace("/* style1 */", stlye1).replace("<!-- Print -->", rawowners)
 
 @app.errorhandler(Exception)
 def page_not_found(e):
-    return f"<h1>404: Torrent not found! Mostly wrong input. <br><br>Error: {e}</h2>", 404
+    return rawindexpage.replace("/* style1 */", stlye1) \
+                    .replace("<!-- Print -->", f"<h1 style='text-align: center;color: red;'>404: Torrent not found! Mostly wrong input. <br><br>Error: {e}</h1>"), 404
 
 if __name__ == "__main__":
     app.run()
